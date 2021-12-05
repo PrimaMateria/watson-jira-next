@@ -12,10 +12,10 @@ python setup.py install
 pip install -e .
 ```
 
-## Package
+## Upload to pypi
 
 ```
-python3 -m build 
 twine check dist/*
+twine upload dist/*
 ```
 
