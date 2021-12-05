@@ -1,23 +1,25 @@
 import re
-import yaml
 import click
-import os
-from colorama import Fore, Style
+from colorama import Fore
 
-mapping_rules = None
+from watson_jira.src import config
+
 
 def is_jira_issue(string):
     """Returns True if input string is a valid JIRA issue key, else False"""
     jira_regex = r"^[A-Z]{1,10}-[0-9]+$"
     return bool(re.match(jira_regex, string))
 
-def process_single_issue(category):
-    return category["issue"]
 
-def process_issue_per_project(category, project):
-    if project in category['projects'].keys():
-        return category['projects'][project]
+def process_single_issue(mapping):
+    return mapping["issue"]
+
+
+def process_issue_per_project(mapping, project):
+    if project in mapping["projects"].keys():
+        return mapping["projects"][project]
     return None
+
 
 def process_issue_specified_in_tag(tags):
     for tag in tags:
@@ -25,47 +27,52 @@ def process_issue_specified_in_tag(tags):
             return tag
     return None
 
-def load_mapping_rules():
-    stream = open(os.path.expanduser("~/.config/watson-jira/mapping-rules.yaml"))
-    return yaml.load(stream)
 
 def ask():
     return click.prompt("Specify jira issue (leave empty to skip)", default="")
 
-def map(project, tags):
-    global mapping_rules
 
-    if mapping_rules is None:
-        mapping_rules = load_mapping_rules()
+def map(project, tags, is_interactive):
+    mappings = config.mappings()
 
+    # resolve jira issue from the tag
     jira_issue = None
-    for category in mapping_rules["categories"]:
-        if category["name"] in tags:
-            click.echo(Fore.YELLOW + f"{category['description']}" + Fore.RESET)
-            if category["type"] == "single_issue":
-                jira_issue = process_single_issue(category)
-            elif category["type"] == "issue_per_project":
-                jira_issue = process_issue_per_project(category, project)
-            elif category["type"] == "issue_specified_in_tag":
+    for mapping in mappings:
+        if mapping["name"] in tags:
+            if mapping["type"] == "single_issue":
+                jira_issue = process_single_issue(mapping)
+            elif mapping["type"] == "issue_per_project":
+                jira_issue = process_issue_per_project(mapping, project)
+            elif mapping["type"] == "issue_specified_in_tag":
                 jira_issue = process_issue_specified_in_tag(tags)
-            else:
-                print("Invalid type of the significant tag")
 
+    # backward compatibility - resolve jira issue from project name
+    if jira_issue is None and is_jira_issue(project):
+        jira_issue = project
+
+    # print the status
+    styled_log = get_styled_log(project, tags)
     if jira_issue is None:
-       click.echo(get_styled_log(project, tags) + " - unable to match mapping rule")
-       jira_issue = ask() 
-    else: 
-        if not click.confirm(get_styled_log(project, tags) + f" will be logged to {jira_issue}", default=True):
-            jira_issue = ask() 
+        click.echo(f"{styled_log} {Fore.RED}unresolved{Fore.RESET}")
+    else:
+        click.echo(f"{styled_log} {Fore.GREEN}{jira_issue}{Fore.RESET}")
+
+    # interact with user
+    if is_interactive and jira_issue is None:
+        jira_issue = ask()
 
     if not jira_issue:
         jira_issue = None
-
-    print("-" * 20)
     return jira_issue
 
+
 def get_styled_log(project, tags):
-    return Fore.MAGENTA + f"{project}" + Fore.BLUE + f" {tags}" + Fore.RESET
+    out = Fore.MAGENTA + f"{project}"
+    tag_delimeter = f"{Fore.RESET},{Fore.BLUE} "
+    if len(tags):
+        out += f"  {Fore.RESET}[{Fore.BLUE}{tag_delimeter.join(tags)}{Fore.RESET}]"
+    return out
+
 
 if __name__ == "__main__":
     pass
