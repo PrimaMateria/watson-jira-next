@@ -1,13 +1,15 @@
 [![CircleCI](https://circleci.com/gh/PrimaMateria/watson-jira-next/tree/master.svg?style=svg)](https://circleci.com/gh/PrimaMateria/watson-jira-next/tree/master)
 
-# Watson-Jira
+# Watson-Jira (next)
 
 Upload Watson time logs to Jira from the CLI! Selects Watson time logs based on the configurable mapping rules, formats those logs to Tempo format, and uploads to the appropriate Jira issues.
 Will not double-write logs, and makes no local edits.
 
+This fork from original [project](https://github.com/medwig/watson-jira). Unfortunately original author doesn't reply. Please use this repository to open issues or pull requests.
+
 ## Install
 
-`$ pip install watson-jira`
+`$ pip install watson-jira-next`
 
 
 ## Config
