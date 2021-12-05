@@ -7,8 +7,8 @@ def readme():
 
 
 setup(
-    name="watson_jira",
-    version="0.2.1",
+    name="watson_jira_next",
+    version="0.3.0",
     description="Format and upload Watson time logs to Jira as Tempo worklogs",
     long_description=readme(),
     long_description_content_type="text/markdown",
@@ -18,11 +18,11 @@ setup(
         "Programming Language :: Python :: 3.6",
         "Topic :: Office/Business :: Scheduling",
     ],
-    url="http://github.com/medwig/watson-jira",
+    url="https://github.com/PrimaMateria/watson-jira-next",
     author="Jonathan Medwig, Matus Benko",
     author_email="jonmedwig@gmail.com, matus.benko@gmail.com",
     license="MIT",
-    packages=["watson_jira", "watson_jira.src"],
+    packages=["watson_jira_next", "watson_jira_next.src"],
     install_requires=[
         "td-watson",
         "python-dateutil",
@@ -35,7 +35,7 @@ setup(
     ],
     setup_requires=["pytest-runner"],
     tests_require=["pytest"],
-    entry_points={"console_scripts": ["watson-jira=watson_jira.cli:main"]},
+    entry_points={"console_scripts": ["watson-jira=watson_jira_next.cli:main"]},
     zip_safe=False,
     include_package_data=True,
 )

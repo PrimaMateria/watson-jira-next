@@ -9,7 +9,7 @@ from dateutil.relativedelta import relativedelta
 from dateutil.rrule import DAILY, rrule
 from dateutil.parser import parse
 
-from watson_jira.src import watson, jira, config
+from watson_jira_next.src import watson, jira, config
 
 colorama.init(autoreset=True)
 

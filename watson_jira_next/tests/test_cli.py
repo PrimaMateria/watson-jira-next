@@ -3,7 +3,7 @@ import json
 from click.testing import CliRunner
 import pytest
 
-from watson_jira import cli
+from watson_jira_next import cli
 
 
 @pytest.fixture(scope="module")
