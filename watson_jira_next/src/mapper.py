@@ -2,7 +2,7 @@ import re
 import click
 from colorama import Fore
 
-from watson_jira.src import config
+from watson_jira_next.src import config
 
 
 def is_jira_issue(string):

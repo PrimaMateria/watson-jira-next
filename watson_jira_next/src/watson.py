@@ -3,7 +3,7 @@ from subprocess import Popen, PIPE
 from datetime import datetime
 from colorama import Fore
 
-from watson_jira.src import mapper
+from watson_jira_next.src import mapper
 
 
 def logs_to_worklogs(logs, is_interactive):

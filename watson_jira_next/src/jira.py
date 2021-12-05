@@ -1,5 +1,5 @@
 from dateutil.parser import parse
-from watson_jira.src import config
+from watson_jira_next.src import config
 from jira import JIRA
 from typing import Optional
 
