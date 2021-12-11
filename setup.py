@@ -8,7 +8,7 @@ def readme():
 
 setup(
     name="watson_jira_next",
-    version="0.3.1",
+    version="0.3.2",
     description="Format and upload Watson time logs to Jira as Tempo worklogs",
     long_description=readme(),
     long_description_content_type="text/markdown",
