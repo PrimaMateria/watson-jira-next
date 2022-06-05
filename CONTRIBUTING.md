@@ -1,22 +1,25 @@
 # Contributing
 
-## Local setup
+Install dependencies
 
 ```
-# Create virtual env
-virtualenv venv
-# Activate virtual env
-source venv/bin/activate
-python setup.py install
-# Install in "editable" mode
-pip install -e .
+poetry install
 ```
 
-## Upload to pypi
+Run the installed version
 
 ```
-python -m build
-twine check dist/*
-twine upload dist/*
+poetry run watson-jira
 ```
 
+Or stay in the python environment
+
+```
+poetry shell
+```
+
+Tests
+
+```
+poetry run pytest ./watson_jira_next
+```
