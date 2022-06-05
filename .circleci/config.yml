@@ -1,11 +1,15 @@
 version: 2.1
-orbs:
-  poetry: frameio/poetry@0.23.0
+jobs:
+  test:
+    docker:
+      - image: circleci/python:3.9
+    steps:
+      - checkout
+      - run: pip install poetry
+      - run: poetry install
+      - run: poetry build
+      - run: poetry run pytest ./watson_jira_next
 workflows:
-  ci:
+  pull_request:
     jobs:
-      - poetry/build
-      - poetry/shell:
-          args: pytest ./watson_jira_next
-          requires:
-            - poetry/build
+      - test
