@@ -1,34 +1,11 @@
-version: 2
-jobs:
-  build:
-    docker:
-      - image: circleci/python
-
-    working_directory: ~/repo
-
-    steps:
-      - checkout
-
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "setup.py" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
-
-      - run:
-          name: install dependencies
-          command: |
-            python3 -m venv venv
-            . venv/bin/activate
-            python setup.py install
-
-      - save_cache:
-          paths:
-            - ./venv
-          key: v1-dependencies-{{ checksum "setup.py" }}
-
-      - run:
-          name: run tests
-          command: |
-            . venv/bin/activate
-            python setup.py test
+version: 2.1
+orbs:
+  poetry: frameio/poetry@0.23.0
+workflows:
+  ci:
+    jobs:
+      - poetry/build
+      - poetry/shell:
+          args: pytest ./watson_jira_next
+          requires:
+            - poetry/build
