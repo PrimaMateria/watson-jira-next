@@ -34,4 +34,4 @@ requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-watson-jira = "watson_jira_next.cli:main"
+watson-jira-next = "watson_jira_next.cli:main"
