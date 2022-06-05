@@ -1,0 +1,37 @@
+[tool.poetry]
+name = "watson-jira-next"
+version = "0.3.2"
+description = "Format and upload Watson time logs to Jira as Tempo worklogs"
+authors = ["matus.benko <matus.benko@gmail.com>"]
+license = "MIT License (MIT)"
+readme = "README.md"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.6",
+    "Topic :: Office/Business :: Scheduling",
+]
+packages = [
+  { include = "watson_jira_next" }
+]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+td-watson = "^2.1.0"
+python-dateutil = "^2.8.2"
+click = "^8.1.3"
+simplejson = "^3.17.6"
+colorama = "^0.4.4"
+jira = "^3.2.0"
+PyYAML = "^6.0"
+pyxdg = "^0.28"
+
+[tool.poetry.dev-dependencies]
+pytest-runner = "^6.0.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+watson-jira = "watson_jira_next.cli:main"
