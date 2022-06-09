@@ -37,7 +37,7 @@ def sync_logs(logs):
         started_datetime = parse(log["started"])
         started_formatted = started_datetime.strftime("%H:%M")
         print(
-            f"{Fore.BLUE}{log['issue']}{Fore.RESET} at {Fore.GREEN}{started_formatted}{Fore.RESET} {log['timeSpent']}m ",
+            f"{Fore.BLUE}{log['issue']}{Fore.RESET} at {Fore.GREEN}{started_formatted}{Fore.RESET} {log['timeSpent']} ",
             end="",
         )
 

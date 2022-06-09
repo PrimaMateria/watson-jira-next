@@ -32,7 +32,7 @@ def get_comment(id, project, tags):
 def get_time_spent(start, stop):
     datetime_start = datetime.fromisoformat(start)
     datetime_stop = datetime.fromisoformat(stop)
-    return int((datetime_stop - datetime_start).total_seconds() // 60 or 1)
+    return str(int((datetime_stop - datetime_start).total_seconds() // 60 or 1)) + 'm'
 
 
 def log_day(date, tempo_format=False, is_interactive=False):
