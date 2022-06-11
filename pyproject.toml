@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "watson-jira-next"
-version = "0.3.2"
+version = "0.3.3"
 description = "Format and upload Watson time logs to Jira as Tempo worklogs"
 authors = ["matus.benko <matus.benko@gmail.com>"]
 license = "MIT License (MIT)"

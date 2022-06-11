@@ -1,5 +1,7 @@
 # Contributing
 
+## poetry
+
 Install dependencies
 
 ```
@@ -22,4 +24,32 @@ Tests
 
 ```
 poetry run pytest ./watson_jira_next
+```
+
+Release
+
+```
+poetry version patch
+poetry build
+poetry publish
+```
+
+## nix 
+
+Start development shell
+
+```
+nix develop
+```
+
+Build 
+
+```
+nix build
+```
+
+Run
+
+```
+nix run
 ```
