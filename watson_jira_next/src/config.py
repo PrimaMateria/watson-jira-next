@@ -6,15 +6,28 @@ from xdg import BaseDirectory
 class ConfigException(Exception):
     pass
 
-
+custom_path = None
 config = None
+
+def set_custom_path(path):
+    global custom_path
+    custom_path = path
+
+def resolve_path():
+    global custom_path
+    if custom_path:
+        return custom_path
+    else:
+        config_dir_path = BaseDirectory.load_first_config("watson-jira")
+        if config_dir_path == None:
+            raise ConfigException("Failed to find config dir")
+        return os.path.join(config_dir_path, "config.yaml")
 
 
 def set(data):
     global config
     try:
-        config_dir_path = BaseDirectory.save_config_path("watson-jira")
-        path = os.path.join(config_dir_path, "config.yaml")
+        path = resolve_path()
         stream = open(path, "w")
         yaml.safe_dump(data, stream)
         config = None
@@ -26,10 +39,7 @@ def get():
     global config
     if config is None:
         try:
-            config_dir_path = BaseDirectory.load_first_config("watson-jira")
-            if config_dir_path == None:
-                raise ConfigException("Failed to find config dir")
-            path = os.path.join(config_dir_path, "config.yaml")
+            path = resolve_path()
             stream = open(path)
         except Exception:
             raise ConfigException("Failed to open config file")

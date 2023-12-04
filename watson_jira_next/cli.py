@@ -98,8 +98,11 @@ def check_connection():
 
 @click.group(context_settings=CONTEXT_SETTINGS)
 @click.version_option(version="1.0.0")
-def main():
-    pass
+@click.option("--config", default=None, help="custom path to the config.yaml")
+def main(**kwargs):
+    config_custom_path = kwargs["config"]
+    if config_custom_path:
+        config.set_custom_path(config_custom_path)
 
 
 @main.command()
